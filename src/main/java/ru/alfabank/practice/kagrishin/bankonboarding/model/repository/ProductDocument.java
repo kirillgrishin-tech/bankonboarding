@@ -1,6 +1,8 @@
 package ru.alfabank.practice.kagrishin.bankonboarding.model.repository;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -11,6 +13,7 @@ public class ProductDocument {
     @Id
     private String id;
     private String name;
+    @Field(targetType = FieldType.DECIMAL128)
     private BigDecimal price;
     private Boolean isAvailable;
 
