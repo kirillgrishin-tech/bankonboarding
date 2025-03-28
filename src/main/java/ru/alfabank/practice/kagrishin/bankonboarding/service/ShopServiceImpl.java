@@ -5,10 +5,10 @@ import ru.alfabank.practice.kagrishin.bankonboarding.exception.ProductNotFoundEx
 import ru.alfabank.practice.kagrishin.bankonboarding.mapper.service.ProductServiceMapper;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Product;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.ProductSummary;
-import ru.alfabank.practice.kagrishin.bankonboarding.repository.ProductRepository;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.repository.ProductDto;
+import ru.alfabank.practice.kagrishin.bankonboarding.repository.ProductStorage;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,39 +16,53 @@ import java.util.Optional;
 @Service
 public class ShopServiceImpl implements ShopService {
 
-    private final ProductRepository productRepository;
+    private final ProductStorage productStorage;
 
-    public ShopServiceImpl(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ShopServiceImpl(ProductStorage productStorage) {
+        this.productStorage = productStorage;
+    }
+
+    @Override
+    public String getWelcomeMessage() {
+        return "Добро пожаловать в наш чудесный магазин";
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return ProductServiceMapper.productDtoListToProductList(productRepository.getAllProducts());
+        return ProductServiceMapper.productDtoListToProductList(
+                productStorage.getAvailableProducts()
+        );
     }
 
     @Override
     public ProductSummary calculateProducts(List<Product> products) {
         if (Objects.isNull(products)) {
-            return null;
+            return new ProductSummary();
         }
-        ProductSummary productSummary = new ProductSummary(new ArrayList<>());
-        BigDecimal sum = products.stream().map(product ->
-            Optional.ofNullable(productRepository.getProduct(product.getId())).map(
-                    productDto -> {
-                        productSummary.getProducts()
-                                .add(new Product(
-                                        productDto.id(),
-                                        productDto.name(),
-                                        productDto.price(),
-                                        product.getQuantity())
-                                );
-                        Integer productQuantity = product.getQuantity();
-                        return productDto.price().multiply(BigDecimal.valueOf(productQuantity));
-                    }
-            ).orElseThrow(()-> new ProductNotFoundException(product))
-        ).reduce(BigDecimal.ZERO, BigDecimal::add);
-        productSummary.setSum(sum);
-        return productSummary;
+        List<Product> matchedProducts = findAndAggregateMatchedProductsFromStorage(products);
+        BigDecimal sum = calculateSumOfAllProducts(matchedProducts);
+        return new ProductSummary(sum, matchedProducts);
     }
+
+    private List<Product> findAndAggregateMatchedProductsFromStorage(List<Product> products) {
+        return products.stream().map(
+                product ->
+                        Optional.ofNullable(productStorage.getProduct(product.getId()))
+                                .filter(ProductDto::isAvailable).map(
+                                        productDto -> new Product(
+                                                productDto.id(),
+                                                productDto.name(),
+                                                productDto.price(),
+                                                product.getQuantity()
+                                        )
+                                ).orElseThrow(() -> new ProductNotFoundException(product))
+        ).toList();
+    }
+
+    private BigDecimal calculateSumOfAllProducts(List<Product> products) {
+        return products.stream()
+                .map(product -> product.getPrice().multiply(BigDecimal.valueOf(product.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
 }

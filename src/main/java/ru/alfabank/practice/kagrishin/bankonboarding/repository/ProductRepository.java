@@ -1,11 +1,13 @@
 package ru.alfabank.practice.kagrishin.bankonboarding.repository;
 
-import ru.alfabank.practice.kagrishin.bankonboarding.model.repository.ProductDto;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.repository.ProductDocument;
 
-import java.util.Map;
+import java.util.List;
 
-public interface ProductRepository {
+public interface ProductRepository extends MongoRepository<ProductDocument, String> {
 
-    Map<Integer,ProductDto> getAllProducts();
-    ProductDto getProduct(Integer id);
+    @Query("{'isAvailable': true}")
+    List<ProductDocument> getAvailableProducts();
 }

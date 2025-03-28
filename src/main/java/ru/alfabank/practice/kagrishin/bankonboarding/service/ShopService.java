@@ -8,10 +8,7 @@ import java.util.List;
 
 public interface ShopService {
 
-    default String getWelcomeMessage() {
-        return "Добро пожаловать в наш чудесный магазин";
-    }
-
+    String getWelcomeMessage();
     List<Product> getAllProducts();
     ProductSummary calculateProducts(List<Product> products);
 }
