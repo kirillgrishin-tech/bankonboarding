@@ -10,7 +10,7 @@ public class ProductNotFoundException extends RuntimeException {
         return product;
     }
 
-    public ProductNotFoundException(Product Product) {
-        this.product = Product;
+    public ProductNotFoundException(Product product) {
+        this.product = product;
     }
 }

@@ -16,9 +16,8 @@ public class ShopControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ProductNotFoundException.class)
     protected ResponseEntity<ProductSummaryDto> handleException(ProductNotFoundException ex) {
         ProductSummaryDto productSummaryDto = Optional.ofNullable(ex.getProduct())
-                .map(
-                        product -> new ProductSummaryDto(product.getId(), product.getQuantity())
-                ).orElse(null);
+                .map(product -> new ProductSummaryDto(product.getId(), product.getQuantity()))
+                .orElse(null);
         return new ResponseEntity<>(productSummaryDto, HttpStatus.BAD_REQUEST);
     }
 }

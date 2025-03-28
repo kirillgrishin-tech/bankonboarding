@@ -5,11 +5,15 @@ import java.util.List;
 
 public class ProductSummary {
 
-    private BigDecimal sum = BigDecimal.ZERO;
+    private BigDecimal sum;
     private List<Product> products;
 
-    public ProductSummary(List<Product> products) {
+    public ProductSummary(BigDecimal sum,List<Product> products) {
+        this.sum = sum;
         this.products = products;
+    }
+
+    public ProductSummary() {
     }
 
     public BigDecimal getSum() {
