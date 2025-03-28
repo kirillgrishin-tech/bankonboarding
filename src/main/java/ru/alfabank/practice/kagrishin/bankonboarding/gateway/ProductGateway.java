@@ -1,10 +1,10 @@
-package ru.alfabank.practice.kagrishin.bankonboarding.repository;
+package ru.alfabank.practice.kagrishin.bankonboarding.gateway;
 
 import ru.alfabank.practice.kagrishin.bankonboarding.model.repository.ProductDto;
 
 import java.util.List;
 
-public interface ProductStorage {
+public interface ProductGateway {
 
     List<ProductDto> getAllProducts();
     List<ProductDto> getAvailableProducts();

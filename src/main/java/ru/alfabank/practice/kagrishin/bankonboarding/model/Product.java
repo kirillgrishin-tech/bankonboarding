@@ -7,6 +7,7 @@ public class Product {
     private final String id;
     private String name;
     private BigDecimal price;
+    private Integer quantity;
 
     public Integer getQuantity() {
         return quantity;
@@ -15,8 +16,6 @@ public class Product {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
-
-    private Integer quantity;
 
     public Product(String id, String name, BigDecimal price, Integer quantity) {
         this.id = id;

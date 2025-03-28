@@ -1,17 +1,18 @@
-package ru.alfabank.practice.kagrishin.bankonboarding.repository;
+package ru.alfabank.practice.kagrishin.bankonboarding.gateway;
 
 import org.springframework.stereotype.Component;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.repository.ProductDocument;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.repository.ProductDto;
+import ru.alfabank.practice.kagrishin.bankonboarding.repository.ProductRepository;
 
 import java.util.List;
 
 @Component
-public class MongoDbProductStorage implements ProductStorage {
+public class ProductGatewayImpl implements ProductGateway {
 
     private final ProductRepository productRepository;
 
-    public MongoDbProductStorage(ProductRepository productRepository) {
+    public ProductGatewayImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 

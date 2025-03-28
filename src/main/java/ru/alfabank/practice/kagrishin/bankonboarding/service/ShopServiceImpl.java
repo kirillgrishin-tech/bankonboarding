@@ -6,7 +6,7 @@ import ru.alfabank.practice.kagrishin.bankonboarding.mapper.service.ProductServi
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Product;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.ProductSummary;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.repository.ProductDto;
-import ru.alfabank.practice.kagrishin.bankonboarding.repository.ProductStorage;
+import ru.alfabank.practice.kagrishin.bankonboarding.gateway.ProductGateway;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,10 +16,10 @@ import java.util.Optional;
 @Service
 public class ShopServiceImpl implements ShopService {
 
-    private final ProductStorage productStorage;
+    private final ProductGateway productGateway;
 
-    public ShopServiceImpl(ProductStorage productStorage) {
-        this.productStorage = productStorage;
+    public ShopServiceImpl(ProductGateway productGateway) {
+        this.productGateway = productGateway;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public List<Product> getAllProducts() {
         return ProductServiceMapper.productDtoListToProductList(
-                productStorage.getAvailableProducts()
+                productGateway.getAvailableProducts()
         );
     }
 
@@ -47,15 +47,14 @@ public class ShopServiceImpl implements ShopService {
     private List<Product> findAndAggregateMatchedProductsFromStorage(List<Product> products) {
         return products.stream().map(
                 product ->
-                        Optional.ofNullable(productStorage.getProduct(product.getId()))
+                        Optional.ofNullable(productGateway.getProduct(product.getId()))
                                 .filter(ProductDto::isAvailable).map(
                                         productDto -> new Product(
                                                 productDto.id(),
                                                 productDto.name(),
                                                 productDto.price(),
-                                                product.getQuantity()
-                                        )
-                                ).orElseThrow(() -> new ProductNotFoundException(product))
+                                                product.getQuantity()))
+                                .orElseThrow(() -> new ProductNotFoundException(product))
         ).toList();
     }
 
