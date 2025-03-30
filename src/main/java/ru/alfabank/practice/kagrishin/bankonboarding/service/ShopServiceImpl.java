@@ -6,7 +6,7 @@ import ru.alfabank.practice.kagrishin.bankonboarding.mapper.service.ProductServi
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Product;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.ProductSummary;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.repository.ProductDto;
-import ru.alfabank.practice.kagrishin.bankonboarding.gateway.ProductGateway;
+import ru.alfabank.practice.kagrishin.bankonboarding.storage.ProductStorage;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,11 +16,11 @@ import java.util.Optional;
 @Service
 public class ShopServiceImpl implements ShopService {
 
-    private final ProductGateway productGateway;
+    private final ProductStorage productStorage;
     private final ProductServiceMapper productServiceMapper;
 
-    public ShopServiceImpl(ProductGateway productGateway, ProductServiceMapper productServiceMapper) {
-        this.productGateway = productGateway;
+    public ShopServiceImpl(ProductStorage productStorage, ProductServiceMapper productServiceMapper) {
+        this.productStorage = productStorage;
         this.productServiceMapper = productServiceMapper;
     }
 
@@ -32,7 +32,7 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public List<Product> getAllProducts() {
         return productServiceMapper.productDtoListToProductList(
-                productGateway.getAvailableProducts()
+                productStorage.getAvailableProducts()
         );
     }
 
@@ -49,7 +49,7 @@ public class ShopServiceImpl implements ShopService {
     private List<Product> findAndAggregateMatchedProductsFromStorage(List<Product> products) {
         return products.stream().map(
                 product ->
-                        Optional.ofNullable(productGateway.getProduct(product.getId()))
+                        productStorage.getProduct(product.getId())
                                 .filter(ProductDto::isAvailable).map(
                                         productDto -> new Product(
                                                 productDto.id(),

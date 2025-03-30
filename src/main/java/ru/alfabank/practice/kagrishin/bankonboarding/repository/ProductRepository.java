@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface ProductRepository extends MongoRepository<ProductDocument, String> {
 
-    @Query("{'isAvailable': true}")
-    List<ProductDocument> getAvailableProducts();
+    List<ProductDocument> findByIsAvailableTrue();
 }

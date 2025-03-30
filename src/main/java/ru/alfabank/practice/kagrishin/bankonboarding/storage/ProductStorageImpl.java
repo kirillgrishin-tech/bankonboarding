@@ -1,4 +1,4 @@
-package ru.alfabank.practice.kagrishin.bankonboarding.gateway;
+package ru.alfabank.practice.kagrishin.bankonboarding.storage;
 
 import org.springframework.stereotype.Component;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.repository.ProductDocument;
@@ -6,13 +6,14 @@ import ru.alfabank.practice.kagrishin.bankonboarding.model.repository.ProductDto
 import ru.alfabank.practice.kagrishin.bankonboarding.repository.ProductRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
-public class ProductGatewayImpl implements ProductGateway {
+public class ProductStorageImpl implements ProductStorage {
 
     private final ProductRepository productRepository;
 
-    public ProductGatewayImpl(ProductRepository productRepository) {
+    public ProductStorageImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
@@ -28,7 +29,7 @@ public class ProductGatewayImpl implements ProductGateway {
 
     @Override
     public List<ProductDto> getAvailableProducts() {
-        return productRepository.getAvailableProducts().stream().map( product -> new ProductDto(
+        return productRepository.findByIsAvailableTrue().stream().map(product -> new ProductDto(
                 product.getId(),
                 product.getName(),
                 product.getPrice(),
@@ -37,15 +38,15 @@ public class ProductGatewayImpl implements ProductGateway {
     }
 
     @Override
-    public ProductDto getProduct(String id) {
+    public Optional<ProductDto> getProduct(String id) {
         return productRepository.findById(id).map(
-                product -> new ProductDto(
+                product -> (new ProductDto(
                         product.getId(),
                         product.getName(),
                         product.getPrice(),
                         product.isAvailable()
                 )
-        ).orElse(null);
+        ));
     }
 
     @Override
