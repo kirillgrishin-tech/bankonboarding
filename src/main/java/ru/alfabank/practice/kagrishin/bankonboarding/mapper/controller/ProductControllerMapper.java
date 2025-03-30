@@ -1,5 +1,6 @@
 package ru.alfabank.practice.kagrishin.bankonboarding.mapper.controller;
 
+import org.springframework.stereotype.Component;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Product;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.ProductSummary;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.controller.ProductDto;
@@ -11,13 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Component
 public class ProductControllerMapper {
 
-    private ProductControllerMapper() {
-        throw new UnsupportedOperationException();
-    }
-
-    public static List<ProductDto> productListToProductDtoList(List<Product> productList) {
+    public List<ProductDto> productListToProductDtoList(List<Product> productList) {
         if (Objects.isNull(productList)) {
             return new ArrayList<>();
         }
@@ -27,7 +25,7 @@ public class ProductControllerMapper {
         return productDtoList;
     }
 
-    public static List<ProductItemDto> productListToProductItemDtoList(List<Product> productList) {
+    public List<ProductItemDto> productListToProductItemDtoList(List<Product> productList) {
         if (Objects.isNull(productList)) {
             return new ArrayList<>();
         }
@@ -37,7 +35,7 @@ public class ProductControllerMapper {
         return productItemDtoList;
     }
 
-    public static List<Product> productSummaryRequestDtoToProductList(
+    public List<Product> productSummaryRequestDtoToProductList(
             List<ProductSummaryDto> productSummaryDtoList
     ) {
         if (Objects.isNull(productSummaryDtoList)) {
@@ -50,7 +48,7 @@ public class ProductControllerMapper {
         return products;
     }
 
-    public static ProductSummaryResponseDto productSummaryToProductSummaryResponseDto(ProductSummary productSummary) {
+    public ProductSummaryResponseDto productSummaryToProductSummaryResponseDto(ProductSummary productSummary) {
         if (Objects.isNull(productSummary)) {
             return null;
         }

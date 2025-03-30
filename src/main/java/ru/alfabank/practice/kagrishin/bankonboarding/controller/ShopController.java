@@ -15,10 +15,12 @@ import java.util.List;
 @RequestMapping("/shop")
 public class ShopController {
 
+    private final ProductControllerMapper productControllerMapper;
     private final ShopService shopService;
 
-    public ShopController(ShopService shopService) {
+    public ShopController(ShopService shopService, ProductControllerMapper productControllerMapper) {
         this.shopService = shopService;
+        this.productControllerMapper = productControllerMapper;
     }
 
     @GetMapping("/welcome")
@@ -29,14 +31,14 @@ public class ShopController {
 
     @GetMapping("/product")
     public List<ProductDto> getAllProducts() {
-        return ProductControllerMapper.productListToProductDtoList(shopService.getAllProducts());
+        return productControllerMapper.productListToProductDtoList(shopService.getAllProducts());
     }
 
     @PostMapping("/calc")
     public ProductSummaryResponseDto calculateProducts(
             @RequestBody(required = false) List<ProductSummaryDto> productDtoList
     ) {
-        List<Product> products = ProductControllerMapper.productSummaryRequestDtoToProductList(productDtoList);
-        return ProductControllerMapper.productSummaryToProductSummaryResponseDto(shopService.calculateProducts(products));
+        List<Product> products = productControllerMapper.productSummaryRequestDtoToProductList(productDtoList);
+        return productControllerMapper.productSummaryToProductSummaryResponseDto(shopService.calculateProducts(products));
     }
 }

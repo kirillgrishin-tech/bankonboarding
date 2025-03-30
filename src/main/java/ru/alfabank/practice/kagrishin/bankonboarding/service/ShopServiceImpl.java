@@ -17,9 +17,11 @@ import java.util.Optional;
 public class ShopServiceImpl implements ShopService {
 
     private final ProductGateway productGateway;
+    private final ProductServiceMapper productServiceMapper;
 
-    public ShopServiceImpl(ProductGateway productGateway) {
+    public ShopServiceImpl(ProductGateway productGateway, ProductServiceMapper productServiceMapper) {
         this.productGateway = productGateway;
+        this.productServiceMapper = productServiceMapper;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<Product> getAllProducts() {
-        return ProductServiceMapper.productDtoListToProductList(
+        return productServiceMapper.productDtoListToProductList(
                 productGateway.getAvailableProducts()
         );
     }
