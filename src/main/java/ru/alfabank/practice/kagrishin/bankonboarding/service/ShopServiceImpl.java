@@ -2,26 +2,21 @@ package ru.alfabank.practice.kagrishin.bankonboarding.service;
 
 import org.springframework.stereotype.Service;
 import ru.alfabank.practice.kagrishin.bankonboarding.exception.ProductNotFoundException;
-import ru.alfabank.practice.kagrishin.bankonboarding.mapper.service.ProductServiceMapper;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Product;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.ProductSummary;
-import ru.alfabank.practice.kagrishin.bankonboarding.model.repository.ProductDto;
 import ru.alfabank.practice.kagrishin.bankonboarding.storage.ProductStorage;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class ShopServiceImpl implements ShopService {
 
     private final ProductStorage productStorage;
-    private final ProductServiceMapper productServiceMapper;
 
-    public ShopServiceImpl(ProductStorage productStorage, ProductServiceMapper productServiceMapper) {
+    public ShopServiceImpl(ProductStorage productStorage) {
         this.productStorage = productStorage;
-        this.productServiceMapper = productServiceMapper;
     }
 
     @Override
@@ -31,9 +26,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<Product> getAllProducts() {
-        return productServiceMapper.productDtoListToProductList(
-                productStorage.getAvailableProducts()
-        );
+        return productStorage.getAvailableProducts();
     }
 
     @Override
@@ -50,11 +43,11 @@ public class ShopServiceImpl implements ShopService {
         return products.stream().map(
                 product ->
                         productStorage.getProduct(product.getId())
-                                .filter(ProductDto::isAvailable).map(
-                                        productDto -> new Product(
-                                                productDto.id(),
-                                                productDto.name(),
-                                                productDto.price(),
+                                .filter(Product::isAvailable).map(
+                                        foundProduct -> new Product(
+                                                foundProduct.getId(),
+                                                foundProduct.getName(),
+                                                foundProduct.getPrice(),
                                                 product.getQuantity()))
                                 .orElseThrow(() -> new ProductNotFoundException(product))
         ).toList();

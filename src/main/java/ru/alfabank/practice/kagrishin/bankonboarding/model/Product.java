@@ -9,13 +9,13 @@ public class Product {
     private String name;
     private BigDecimal price;
     private Integer quantity;
+    private Boolean isAvailable;
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public Product(String id, String name, BigDecimal price, Boolean isAvailable) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.isAvailable = isAvailable;
     }
 
     public Product(String id, String name, BigDecimal price, Integer quantity) {
@@ -25,10 +25,20 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public Product(String id, String name, BigDecimal price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
+    public Boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(Boolean available) {
+        isAvailable = available;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public Product(String id, Integer quantity) {
@@ -75,6 +85,7 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
+                ", isAvailable=" + isAvailable +
                 '}';
     }
 }

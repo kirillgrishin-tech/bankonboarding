@@ -1,8 +1,8 @@
 package ru.alfabank.practice.kagrishin.bankonboarding.storage;
 
 import org.springframework.stereotype.Component;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.Product;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.repository.ProductDocument;
-import ru.alfabank.practice.kagrishin.bankonboarding.model.repository.ProductDto;
 import ru.alfabank.practice.kagrishin.bankonboarding.repository.ProductRepository;
 
 import java.util.List;
@@ -18,8 +18,8 @@ public class ProductStorageImpl implements ProductStorage {
     }
 
     @Override
-    public List<ProductDto> getAllProducts() {
-        return productRepository.findAll().stream().map( product -> new ProductDto(
+    public List<Product> getAllProducts() {
+        return productRepository.findAll().stream().map( product -> new Product(
                                 product.getId(),
                                 product.getName(),
                                 product.getPrice(),
@@ -28,8 +28,8 @@ public class ProductStorageImpl implements ProductStorage {
     }
 
     @Override
-    public List<ProductDto> getAvailableProducts() {
-        return productRepository.findByIsAvailableTrue().stream().map(product -> new ProductDto(
+    public List<Product> getAvailableProducts() {
+        return productRepository.findByIsAvailableTrue().stream().map(product -> new Product(
                 product.getId(),
                 product.getName(),
                 product.getPrice(),
@@ -38,9 +38,9 @@ public class ProductStorageImpl implements ProductStorage {
     }
 
     @Override
-    public Optional<ProductDto> getProduct(String id) {
+    public Optional<Product> getProduct(String id) {
         return productRepository.findById(id).map(
-                product -> (new ProductDto(
+                product -> (new Product(
                         product.getId(),
                         product.getName(),
                         product.getPrice(),
@@ -50,7 +50,7 @@ public class ProductStorageImpl implements ProductStorage {
     }
 
     @Override
-    public void save(ProductDto product) {
-        productRepository.save(new ProductDocument(product.id(), product.name(), product.price(), product.isAvailable()));
+    public void save(Product product) {
+        productRepository.save(new ProductDocument(product.getId(), product.getName(), product.getPrice(), product.isAvailable()));
     }
 }
