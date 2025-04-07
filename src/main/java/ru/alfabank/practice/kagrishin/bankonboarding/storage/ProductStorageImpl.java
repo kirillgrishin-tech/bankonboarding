@@ -2,7 +2,7 @@ package ru.alfabank.practice.kagrishin.bankonboarding.storage;
 
 import org.springframework.stereotype.Component;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Product;
-import ru.alfabank.practice.kagrishin.bankonboarding.model.repository.ProductDocument;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.repository.ProductEntity;
 import ru.alfabank.practice.kagrishin.bankonboarding.repository.ProductRepository;
 
 import java.util.List;
@@ -18,39 +18,34 @@ public class ProductStorageImpl implements ProductStorage {
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll().stream().map( product -> new Product(
-                                product.getId(),
-                                product.getName(),
-                                product.getPrice(),
-                                product.isAvailable())
-        ).toList();
-    }
-
-    @Override
     public List<Product> getAvailableProducts() {
-        return productRepository.findByIsAvailableTrue().stream().map(product -> new Product(
-                product.getId(),
-                product.getName(),
-                product.getPrice(),
-                product.isAvailable())
+        return productRepository.findByIsAvailableTrue().stream().map(productEntity -> new Product(
+                productEntity.getId(),
+                productEntity.getName(),
+                productEntity.getPrice(),
+                productEntity.isAvailable())
         ).toList();
     }
 
     @Override
     public Optional<Product> getProduct(String id) {
         return productRepository.findById(id).map(
-                product -> (new Product(
-                        product.getId(),
-                        product.getName(),
-                        product.getPrice(),
-                        product.isAvailable()
+                productEntity -> (new Product(
+                        productEntity.getId(),
+                        productEntity.getName(),
+                        productEntity.getPrice(),
+                        productEntity.isAvailable()
                 )
         ));
     }
 
     @Override
     public void save(Product product) {
-        productRepository.save(new ProductDocument(product.getId(), product.getName(), product.getPrice(), product.isAvailable()));
+        productRepository.save(new ProductEntity(
+                product.getId(),
+                product.getName(),
+                product.getPrice(),
+                product.isAvailable()
+        ));
     }
 }

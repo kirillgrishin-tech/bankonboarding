@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Document(collection = "products")
-public class ProductDocument {
+public class ProductEntity {
 
     @Id
     private String id;
@@ -17,21 +17,21 @@ public class ProductDocument {
     private BigDecimal price;
     private Boolean isAvailable;
 
-    public ProductDocument(){
+    public ProductEntity(){
     }
 
-    public ProductDocument(String id, String name, BigDecimal price, Boolean isAvailable) {
+    public ProductEntity(String id, String name, BigDecimal price, boolean isAvailable) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.isAvailable = isAvailable;
     }
 
-    public Boolean isAvailable() {
+    public boolean isAvailable() {
         return isAvailable;
     }
 
-    public void setAvailable(Boolean available) {
+    public void setAvailable(boolean available) {
         isAvailable = available;
     }
 
@@ -58,7 +58,7 @@ public class ProductDocument {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ProductDocument that)) return false;
+        if (!(o instanceof ProductEntity that)) return false;
         return Objects.equals(id, that.id);
     }
 

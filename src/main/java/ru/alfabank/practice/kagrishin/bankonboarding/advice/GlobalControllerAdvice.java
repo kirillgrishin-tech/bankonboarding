@@ -11,7 +11,7 @@ import ru.alfabank.practice.kagrishin.bankonboarding.model.controller.ProductSum
 import java.util.Optional;
 
 @ControllerAdvice
-public class ShopControllerAdvice extends ResponseEntityExceptionHandler {
+public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ProductNotFoundException.class)
     protected ResponseEntity<ProductSummaryDto> handleException(ProductNotFoundException ex) {

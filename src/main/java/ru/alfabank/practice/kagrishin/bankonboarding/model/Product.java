@@ -11,37 +11,37 @@ public class Product {
     private Integer quantity;
     private Boolean isAvailable;
 
-    public Product(String id, String name, BigDecimal price, Boolean isAvailable) {
+    public Product(String id, String name, BigDecimal price, boolean isAvailable) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.isAvailable = isAvailable;
     }
 
-    public Product(String id, String name, BigDecimal price, Integer quantity) {
+    public Product(String id, String name, BigDecimal price, int quantity) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
 
-    public Boolean isAvailable() {
+    public boolean isAvailable() {
         return isAvailable;
     }
 
-    public void setAvailable(Boolean available) {
+    public void setAvailable(boolean available) {
         isAvailable = available;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    public Product(String id, Integer quantity) {
+    public Product(String id, int quantity) {
         this.id = id;
         this.quantity = quantity;
     }

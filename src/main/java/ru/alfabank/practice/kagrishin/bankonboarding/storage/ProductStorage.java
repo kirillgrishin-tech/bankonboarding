@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface ProductStorage {
 
-    List<Product> getAllProducts();
     List<Product> getAvailableProducts();
     Optional<Product> getProduct(String id);
     void save(Product product);
