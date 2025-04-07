@@ -1,4 +1,4 @@
-package ru.alfabank.practice.kagrishin.bankonboarding.model.repository;
+package ru.alfabank.practice.kagrishin.bankonboarding.model.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;

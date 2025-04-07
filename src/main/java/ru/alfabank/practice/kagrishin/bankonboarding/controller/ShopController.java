@@ -1,12 +1,12 @@
 package ru.alfabank.practice.kagrishin.bankonboarding.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ru.alfabank.practice.kagrishin.bankonboarding.mapper.controller.ProductControllerMapper;
+import ru.alfabank.practice.kagrishin.bankonboarding.mapper.ProductProductDtoMapper;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Product;
-import ru.alfabank.practice.kagrishin.bankonboarding.model.controller.ProductDto;
-import ru.alfabank.practice.kagrishin.bankonboarding.model.controller.ProductSummaryDto;
-import ru.alfabank.practice.kagrishin.bankonboarding.model.controller.ProductSummaryResponseDto;
-import ru.alfabank.practice.kagrishin.bankonboarding.model.controller.WelcomeResponseDto;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.ProductDto;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.ProductSummaryDto;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.ProductSummaryResponse;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.WelcomeResponse;
 import ru.alfabank.practice.kagrishin.bankonboarding.service.ShopService;
 
 import java.util.List;
@@ -15,30 +15,30 @@ import java.util.List;
 @RequestMapping("/shop")
 public class ShopController {
 
-    private final ProductControllerMapper productControllerMapper;
+    private final ProductProductDtoMapper productProductDtoMapper;
     private final ShopService shopService;
 
-    public ShopController(ShopService shopService, ProductControllerMapper productControllerMapper) {
+    public ShopController(ShopService shopService, ProductProductDtoMapper productProductDtoMapper) {
         this.shopService = shopService;
-        this.productControllerMapper = productControllerMapper;
+        this.productProductDtoMapper = productProductDtoMapper;
     }
 
     @GetMapping("/welcome")
-    public WelcomeResponseDto welcome() {
+    public WelcomeResponse welcome() {
         String message = shopService.getWelcomeMessage();
-        return new WelcomeResponseDto(message);
+        return new WelcomeResponse(message);
     }
 
     @GetMapping("/product")
     public List<ProductDto> getAllProducts() {
-        return productControllerMapper.productListToProductDtoList(shopService.getAllProducts());
+        return productProductDtoMapper.productListToProductDtoList(shopService.getAllProducts());
     }
 
     @PostMapping("/calc")
-    public ProductSummaryResponseDto calculateProducts(
+    public ProductSummaryResponse calculateProducts(
             @RequestBody(required = false) List<ProductSummaryDto> productDtoList
     ) {
-        List<Product> products = productControllerMapper.productSummaryRequestDtoToProductList(productDtoList);
-        return productControllerMapper.productSummaryToProductSummaryResponseDto(shopService.calculateProducts(products));
+        List<Product> products = productProductDtoMapper.productSummaryRequestDtoToProductList(productDtoList);
+        return productProductDtoMapper.productSummaryToProductSummaryResponseDto(shopService.calculateProducts(products));
     }
 }

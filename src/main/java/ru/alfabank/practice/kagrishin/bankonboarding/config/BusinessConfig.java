@@ -2,20 +2,18 @@ package ru.alfabank.practice.kagrishin.bankonboarding.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-import ru.alfabank.practice.kagrishin.bankonboarding.storage.BusinessSettingStorage;
 
 @Component
-@ConfigurationProperties("settings")
-public class BusinessSettingStorageImpl implements BusinessSettingStorage {
+@ConfigurationProperties("bankonboarding")
+public class BusinessConfig {
 
-    private int maxDiscount;
+    private Integer maxDiscount;
 
     public void setMaxDiscount(int maxDiscount) {
         this.maxDiscount = maxDiscount;
     }
 
-    @Override
-    public int getMaxDiscount() {
+    public Integer getMaxDiscount() {
         return maxDiscount;
     }
 }

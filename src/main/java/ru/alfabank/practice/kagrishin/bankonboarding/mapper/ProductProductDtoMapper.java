@@ -1,19 +1,19 @@
-package ru.alfabank.practice.kagrishin.bankonboarding.mapper.controller;
+package ru.alfabank.practice.kagrishin.bankonboarding.mapper;
 
 import org.springframework.stereotype.Component;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Product;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.ProductSummary;
-import ru.alfabank.practice.kagrishin.bankonboarding.model.controller.ProductDto;
-import ru.alfabank.practice.kagrishin.bankonboarding.model.controller.ProductItemDto;
-import ru.alfabank.practice.kagrishin.bankonboarding.model.controller.ProductSummaryDto;
-import ru.alfabank.practice.kagrishin.bankonboarding.model.controller.ProductSummaryResponseDto;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.ProductDto;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.ProductItemDto;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.ProductSummaryDto;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.ProductSummaryResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Component
-public class ProductControllerMapper {
+public class ProductProductDtoMapper {
 
     public List<ProductDto> productListToProductDtoList(List<Product> productList) {
         if (Objects.isNull(productList)) {
@@ -48,10 +48,10 @@ public class ProductControllerMapper {
         return products;
     }
 
-    public ProductSummaryResponseDto productSummaryToProductSummaryResponseDto(ProductSummary productSummary) {
+    public ProductSummaryResponse productSummaryToProductSummaryResponseDto(ProductSummary productSummary) {
         if (Objects.isNull(productSummary)) {
             return null;
         }
-        return new ProductSummaryResponseDto(productSummary.getSum(), productListToProductItemDtoList(productSummary.getProducts()));
+        return new ProductSummaryResponse(productSummary.getSum(), productListToProductItemDtoList(productSummary.getProducts()));
     }
 }

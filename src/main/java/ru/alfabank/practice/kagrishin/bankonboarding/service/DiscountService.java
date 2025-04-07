@@ -1,4 +1,4 @@
-package ru.alfabank.practice.kagrishin.bankonboarding.storage;
+package ru.alfabank.practice.kagrishin.bankonboarding.service;
 
 import org.springframework.stereotype.Component;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Discount;
@@ -7,15 +7,14 @@ import ru.alfabank.practice.kagrishin.bankonboarding.repository.DiscountReposito
 import java.util.List;
 
 @Component
-public class DiscountStorageImpl implements DiscountStorage {
+public class DiscountService {
 
     private final DiscountRepository discountRepository;
 
-    public DiscountStorageImpl(DiscountRepository discountRepository) {
+    public DiscountService(DiscountRepository discountRepository) {
         this.discountRepository = discountRepository;
     }
 
-    @Override
     public List<Discount> getDiscounts(String productId) {
         return discountRepository.findByApplicableProductIdsContainingAndIsEnableTrue(productId)
                 .stream()

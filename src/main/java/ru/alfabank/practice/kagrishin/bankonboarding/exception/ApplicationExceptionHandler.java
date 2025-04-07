@@ -1,17 +1,16 @@
-package ru.alfabank.practice.kagrishin.bankonboarding.advice;
+package ru.alfabank.practice.kagrishin.bankonboarding.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ru.alfabank.practice.kagrishin.bankonboarding.exception.ProductNotFoundException;
-import ru.alfabank.practice.kagrishin.bankonboarding.model.controller.ProductSummaryDto;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.ProductSummaryDto;
 
 import java.util.Optional;
 
 @ControllerAdvice
-public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
+public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ProductNotFoundException.class)
     protected ResponseEntity<ProductSummaryDto> handleException(ProductNotFoundException ex) {

@@ -1,13 +1,11 @@
 package ru.alfabank.practice.kagrishin.bankonboarding.service;
 
 import org.springframework.stereotype.Service;
+import ru.alfabank.practice.kagrishin.bankonboarding.config.BusinessConfig;
 import ru.alfabank.practice.kagrishin.bankonboarding.exception.ProductNotFoundException;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Discount;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Product;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.ProductSummary;
-import ru.alfabank.practice.kagrishin.bankonboarding.storage.BusinessSettingStorage;
-import ru.alfabank.practice.kagrishin.bankonboarding.storage.DiscountStorage;
-import ru.alfabank.practice.kagrishin.bankonboarding.storage.ProductStorage;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -17,14 +15,14 @@ import java.util.Objects;
 @Service
 public class ShopServiceImpl implements ShopService {
 
-    private final ProductStorage productStorage;
-    private final DiscountStorage discountStorage;
-    private final BusinessSettingStorage businessSettingStorage;
+    private final ProductService productService;
+    private final DiscountService discountService;
+    private final BusinessConfig businessConfig;
 
-    public ShopServiceImpl(ProductStorage productStorage, DiscountStorage discountStorage, BusinessSettingStorage businessSettingStorage) {
-        this.productStorage = productStorage;
-        this.discountStorage = discountStorage;
-        this.businessSettingStorage = businessSettingStorage;
+    public ShopServiceImpl(ProductService productService, DiscountService discountService, BusinessConfig businessConfig) {
+        this.productService = productService;
+        this.discountService = discountService;
+        this.businessConfig = businessConfig;
     }
 
     @Override
@@ -34,7 +32,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<Product> getAllProducts() {
-        return productStorage.getAvailableProducts();
+        return productService.getAvailableProducts();
     }
 
     @Override
@@ -50,7 +48,7 @@ public class ShopServiceImpl implements ShopService {
     private List<Product> findAndAggregateMatchedProductsFromStorage(List<Product> products) {
         return products.stream().map(
                 product ->
-                        productStorage.getProduct(product.getId())
+                        productService.getProduct(product.getId())
                                 .filter(Product::isAvailable).map(
                                         foundProduct -> new Product(
                                                 foundProduct.getId(),
@@ -64,12 +62,12 @@ public class ShopServiceImpl implements ShopService {
     private BigDecimal calculateSumOfAllProducts(List<Product> products) {
         return products.stream()
                 .map(product -> {
-                    int discount = discountStorage.getDiscounts(product.getId())
+                    int discount = discountService.getDiscounts(product.getId())
                             .stream()
                             .map(Discount::getPercent)
                             .reduce(0,Integer::sum);
-                    if (businessSettingStorage.getMaxDiscount() > 0 && discount > businessSettingStorage.getMaxDiscount()) {
-                        discount = businessSettingStorage.getMaxDiscount();
+                    if (businessConfig.getMaxDiscount() > 0 && discount > businessConfig.getMaxDiscount()) {
+                        discount = businessConfig.getMaxDiscount();
                     }
                     BigDecimal priceWithDiscount = calculateProductPriceWithDiscount(product.getPrice(), discount);
                     return priceWithDiscount.multiply(BigDecimal.valueOf(product.getQuantity()));

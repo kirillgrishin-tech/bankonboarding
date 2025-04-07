@@ -1,4 +1,4 @@
-package ru.alfabank.practice.kagrishin.bankonboarding.model.controller;
+package ru.alfabank.practice.kagrishin.bankonboarding.model.dto;
 
 import java.math.BigDecimal;
 
