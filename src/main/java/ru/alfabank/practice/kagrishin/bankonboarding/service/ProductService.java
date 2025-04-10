@@ -16,23 +16,26 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public List<Product> getAvailableProducts() {
-        return productRepository.findByIsAvailableTrue().stream().map(productEntity -> new Product(
-                productEntity.getId(),
-                productEntity.getName(),
-                productEntity.getPrice(),
-                productEntity.getIsAvailable())
+        return productRepository.findByIsAvailableTrue().stream().map(productEntity ->
+                Product.builder()
+                        .id(productEntity.getId())
+                        .name(productEntity.getName())
+                        .price(productEntity.getPrice())
+                        .isAvailable(productEntity.getIsAvailable())
+                        .build()
         ).toList();
     }
 
     public Optional<Product> getProduct(String id) {
         return productRepository.findById(id).map(
-                productEntity -> (new Product(
-                        productEntity.getId(),
-                        productEntity.getName(),
-                        productEntity.getPrice(),
-                        productEntity.getIsAvailable()
-                )
-        ));
+                productEntity ->
+                        Product.builder()
+                                .id(productEntity.getId())
+                                .name(productEntity.getName())
+                                .price(productEntity.getPrice())
+                                .isAvailable(productEntity.getIsAvailable())
+                                .build()
+        );
     }
 
     public void save(Product product) {

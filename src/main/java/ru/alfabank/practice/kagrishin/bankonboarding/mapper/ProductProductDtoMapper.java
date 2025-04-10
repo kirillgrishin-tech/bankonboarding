@@ -43,7 +43,11 @@ public class ProductProductDtoMapper {
         }
         List<Product> products = new ArrayList<>();
         productSummaryDtoList.forEach(
-                productSummaryDto -> products.add(new Product(productSummaryDto.id(), productSummaryDto.quantity()))
+                productSummaryDto -> products.add(Product.builder()
+                        .id(productSummaryDto.id())
+                        .quantity(productSummaryDto.quantity())
+                        .build()
+                )
         );
         return products;
     }

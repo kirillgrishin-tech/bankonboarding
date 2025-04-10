@@ -46,11 +46,13 @@ public class ShopServiceImpl implements ShopService {
                 product ->
                         productService.getProduct(product.getId())
                                 .filter(Product::getIsAvailable).map(
-                                        foundProduct -> new Product(
-                                                foundProduct.getId(),
-                                                foundProduct.getName(),
-                                                foundProduct.getPrice(),
-                                                product.getQuantity()))
+                                        foundProduct -> Product.builder()
+                                                .id(foundProduct.getId())
+                                                .name(foundProduct.getName())
+                                                .price(foundProduct.getPrice())
+                                                .quantity(product.getQuantity())
+                                                .build()
+                                )
                                 .orElseThrow(() -> new ProductNotFoundException(product))
         ).toList();
     }
