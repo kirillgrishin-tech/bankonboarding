@@ -1,0 +1,9 @@
+spring:
+  application.name: bankonboarding
+  data.mongodb.uri:
+bankonboarding:
+  settings.max-discount: 50
+  scheduler:
+    inventory:
+      enabled: false
+      delay: 60000

@@ -22,7 +22,7 @@ public class ProductService {
                 productEntity.getId(),
                 productEntity.getName(),
                 productEntity.getPrice(),
-                productEntity.isAvailable())
+                productEntity.getIsAvailable())
         ).toList();
     }
 
@@ -32,7 +32,7 @@ public class ProductService {
                         productEntity.getId(),
                         productEntity.getName(),
                         productEntity.getPrice(),
-                        productEntity.isAvailable()
+                        productEntity.getIsAvailable()
                 )
         ));
     }
@@ -42,7 +42,7 @@ public class ProductService {
                 product.getId(),
                 product.getName(),
                 product.getPrice(),
-                product.isAvailable()
+                product.getIsAvailable()
         ));
     }
 }

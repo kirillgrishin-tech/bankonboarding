@@ -49,7 +49,7 @@ public class ShopServiceImpl implements ShopService {
         return products.stream().map(
                 product ->
                         productService.getProduct(product.getId())
-                                .filter(Product::isAvailable).map(
+                                .filter(Product::getIsAvailable).map(
                                         foundProduct -> new Product(
                                                 foundProduct.getId(),
                                                 foundProduct.getName(),

@@ -1,3 +1,6 @@
 package ru.alfabank.practice.kagrishin.bankonboarding.model.dto;
 
-public record ProductSummaryDto(String id, int quantity) {}
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
+
+public record ProductSummaryDto(@NotBlank(message="id required") String id, @PositiveOrZero(message="quantity required") Integer quantity) {}

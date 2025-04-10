@@ -1,5 +1,6 @@
 package ru.alfabank.practice.kagrishin.bankonboarding.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import ru.alfabank.practice.kagrishin.bankonboarding.mapper.ProductProductDtoMapper;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Product;
@@ -36,7 +37,7 @@ public class ShopController {
 
     @PostMapping("/calc")
     public ProductSummaryResponse calculateProducts(
-            @RequestBody(required = false) List<ProductSummaryDto> productDtoList
+            @Valid @RequestBody(required = false) List<ProductSummaryDto> productDtoList
     ) {
         List<Product> products = productProductDtoMapper.productSummaryRequestDtoToProductList(productDtoList);
         return productProductDtoMapper.productSummaryToProductSummaryResponseDto(shopService.calculateProducts(products));

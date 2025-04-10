@@ -32,7 +32,7 @@ public class ScheduledTasks {
             int randomIndex = ThreadLocalRandom.current().nextInt(productDtoList.size());
             Product product = productDtoList.get(randomIndex);
             log.info("Change availability for product {} with id: {}", product.getName(), product.getId());
-            product.setAvailable(false);
+            product.setIsAvailable(false);
             productService.save(product);
         }
     }

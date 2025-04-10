@@ -23,7 +23,7 @@ public class DiscountService {
                         discountEntity.getName(),
                         discountEntity.getApplicableProductIds(),
                         discountEntity.getPercent(),
-                        discountEntity.isEnable(),
+                        discountEntity.getIsEnable(),
                         discountEntity.getCreated()
                         )
                 )
