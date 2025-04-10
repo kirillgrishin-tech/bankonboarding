@@ -12,9 +12,4 @@ import org.springframework.stereotype.Component;
 public class BusinessConfig {
 
     private Integer maxDiscount;
-
-    public void setMaxDiscount(int maxDiscount) {
-        this.maxDiscount = maxDiscount;
-    }
-
 }
