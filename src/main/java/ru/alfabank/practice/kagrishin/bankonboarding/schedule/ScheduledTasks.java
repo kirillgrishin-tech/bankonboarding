@@ -1,5 +1,6 @@
 package ru.alfabank.practice.kagrishin.bankonboarding.schedule;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -12,15 +13,12 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component
+@RequiredArgsConstructor
 @ConditionalOnProperty(name = "bankonboarding.scheduler.inventory.enabled", havingValue = "true")
 public class ScheduledTasks {
 
     private static final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
     private final ProductService productService;
-
-    public ScheduledTasks(ProductService productService) {
-        this.productService = productService;
-    }
 
     @Scheduled(fixedRateString = "${bankonboarding.scheduler.inventory.delay}")
     public void inventory() {

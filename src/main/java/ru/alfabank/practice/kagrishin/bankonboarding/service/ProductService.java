@@ -1,6 +1,7 @@
 package ru.alfabank.practice.kagrishin.bankonboarding.service;
 
-import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Product;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.entity.ProductEntity;
 import ru.alfabank.practice.kagrishin.bankonboarding.repository.ProductRepository;
@@ -8,14 +9,11 @@ import ru.alfabank.practice.kagrishin.bankonboarding.repository.ProductRepositor
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
+@RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
-
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
 
     public List<Product> getAvailableProducts() {
         return productRepository.findByIsAvailableTrue().stream().map(productEntity -> new Product(

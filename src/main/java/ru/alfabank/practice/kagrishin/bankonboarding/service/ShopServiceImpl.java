@@ -1,5 +1,6 @@
 package ru.alfabank.practice.kagrishin.bankonboarding.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.alfabank.practice.kagrishin.bankonboarding.config.BusinessConfig;
 import ru.alfabank.practice.kagrishin.bankonboarding.exception.ProductNotFoundException;
@@ -13,17 +14,12 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class ShopServiceImpl implements ShopService {
 
     private final ProductService productService;
     private final DiscountService discountService;
     private final BusinessConfig businessConfig;
-
-    public ShopServiceImpl(ProductService productService, DiscountService discountService, BusinessConfig businessConfig) {
-        this.productService = productService;
-        this.discountService = discountService;
-        this.businessConfig = businessConfig;
-    }
 
     @Override
     public String getWelcomeMessage() {
