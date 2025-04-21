@@ -34,7 +34,7 @@ public class ShopController {
 
     @PostMapping("/calc")
     public ProductSummaryResponse calculateProducts(
-            @Valid @RequestBody(required = false) List<ProductSummaryDto> productDtoList
+            @Valid @RequestBody List<ProductSummaryDto> productDtoList
     ) {
         List<Product> products = productProductDtoMapper.productSummaryRequestDtoToProductList(productDtoList);
         return productProductDtoMapper.productSummaryToProductSummaryResponseDto(shopService.calculateProducts(products));
