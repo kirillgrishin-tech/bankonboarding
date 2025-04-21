@@ -24,7 +24,8 @@ public class ShopControllerTest extends BankonboardingApplicationTests {
     public void welcomeTest() throws Exception {
         mvc.perform(get("/shop/welcome"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(print());
     }
 
     @Test
