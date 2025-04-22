@@ -1,2 +1,6 @@
 spring:
   application.name: bankonboarding
+bankonboarding:
+  scheduler:
+    inventory:
+      enabled: true

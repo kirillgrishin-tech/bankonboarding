@@ -26,6 +26,17 @@ public class ProductService {
         ).toList();
     }
 
+    public List<Product> getUnavailableProducts() {
+        return productRepository.findByIsAvailableFalse().stream().map(productEntity ->
+                Product.builder()
+                        .id(productEntity.getId())
+                        .name(productEntity.getName())
+                        .price(productEntity.getPrice())
+                        .isAvailable(productEntity.getIsAvailable())
+                        .build()
+        ).toList();
+    }
+
     public Optional<Product> getProduct(String id) {
         return productRepository.findById(id).map(
                 productEntity ->

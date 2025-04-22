@@ -22,6 +22,10 @@ public class ScheduledTasks {
 
     @Scheduled(fixedRateString = "${bankonboarding.scheduler.inventory.delay}")
     public void inventory() {
+        productService.getUnavailableProducts().forEach(product -> {
+            product.setIsAvailable(true);
+            productService.save(product);
+        });
         for (int i = 0; i<2; i++) {
             List<Product> productDtoList = productService.getAvailableProducts();
             if (productDtoList.isEmpty()) {

@@ -8,4 +8,5 @@ import java.util.List;
 public interface ProductRepository extends MongoRepository<ProductEntity, String> {
 
     List<ProductEntity> findByIsAvailableTrue();
+    List<ProductEntity> findByIsAvailableFalse();
 }
