@@ -31,7 +31,7 @@ public class ShopServiceTest extends BankonboardingApplicationTests {
 
     @Test
     public void checkCalcProducts() {
-        //prepare for calculate: one coke-cola, three butters and two apples
+        //prepare for calculate: one coke-cola, three butters and two apples with discounts
         List<Product> products = new ArrayList<>();
         shopService.getAllProducts().forEach(product -> {
                 switch (product.getName()) {
@@ -46,10 +46,11 @@ public class ShopServiceTest extends BankonboardingApplicationTests {
                         break;
                     default:
                         break;
-                }});
+                }
+        });
         BigDecimal sum = shopService.calculateProducts(products).getSum();
 
-        //sum must be 1602.73
-        assertEquals(sum, BigDecimal.valueOf(1602.73));
+        //sum must be 1580.15
+        assertEquals(sum, BigDecimal.valueOf(1580.15));
     }
 }

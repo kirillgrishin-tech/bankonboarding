@@ -4,10 +4,10 @@
     "applicableProductIds": [
         "67e644a0e8e6c44020f830a9",
         "67e67b6e28c0c42b6992006d",
-        "67e67b6e28c0c42b6992006e",
+        "67f8a4bb1afc8e264b0e89f7",
         "67e67b9a6ce21830c34c836e",
         "67e67b9b6ce21830c34c836f",
-        "67e67bde506e1b398f30eb91",
+        "67f8a4bb1afc8e264b0e89f6",
         "67e67bde506e1b398f30eb92"
     ],
     "percent": 5,
@@ -18,14 +18,14 @@
     "name": "Thanksgiving",
     "applicableProductIds": [
         "67e644a0e8e6c44020f830a9",
-        "67e67b6e28c0c42b6992006d",
+        "67f8a4bb1afc8e264b0e89f6",
         "67e67b6e28c0c42b6992006e",
         "67e67b9a6ce21830c34c836e",
-        "67e67b9b6ce21830c34c836f",
+        "67f8a4bb1afc8e264b0e89f7",
         "67e67bde506e1b398f30eb91",
         "67e67bde506e1b398f30eb92"
     ],
-    "percent": 100,
+    "percent": 10,
     "isEnable": true,
     "created": "2025-04-11T14:30:00"
   },
@@ -33,7 +33,7 @@
     "name": "Christmas",
     "applicableProductIds": [
         "67e644a0e8e6c44020f830a9",
-        "67e67b6e28c0c42b6992006d",
+        "67f8a4bb1afc8e264b0e89f6",
         "67e67b6e28c0c42b6992006e"
     ],
     "percent": 5,
