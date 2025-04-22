@@ -1,0 +1,37 @@
+[
+  {
+    "id": "67f8a4bb1afc8e264b0e89f4",
+    "name": "Butter",
+    "price": 450.43
+  },
+  {
+    "id": "67f8a4bb1afc8e264b0e89f5",
+    "name": "Apple",
+    "price": 50.45
+  },
+  {
+    "id": "67f8a4bb1afc8e264b0e89f6",
+    "name": "Coke-Cola",
+    "price": 150.54
+  },
+  {
+    "id": "67f8a4bb1afc8e264b0e89f7",
+    "name": "Cake",
+    "price": 215.65
+  },
+  {
+    "id": "67f8a4bb1afc8e264b0e89f8",
+    "name": "Milk",
+    "price": 123.43
+  },
+  {
+    "id": "67f8a4bb1afc8e264b0e89fa",
+    "name": "Salt",
+    "price": 5.67
+  },
+  {
+    "id": "67f8a4bb1afc8e264b0e89f9",
+    "name": "Bread",
+    "price": 60
+  }
+]

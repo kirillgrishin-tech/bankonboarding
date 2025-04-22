@@ -1,0 +1,17 @@
+{
+  "sum": 4306.12,
+  "products": [
+    {
+      "id": "67f8a4bb1afc8e264b0e89f4",
+      "name": "Butter",
+      "price": 450.43,
+      "quantity": 9
+    },
+    {
+      "id": "67f8a4bb1afc8e264b0e89f5",
+      "name": "Apple",
+      "price": 50.45,
+      "quantity": 5
+    }
+  ]
+}

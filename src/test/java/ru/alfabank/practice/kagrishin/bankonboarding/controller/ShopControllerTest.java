@@ -30,9 +30,12 @@ public class ShopControllerTest extends BankonboardingApplicationTests {
 
     @Test
     public void getProductsTest() throws Exception {
+        String expectedResponse = Files.readString(new ClassPathResource("controller/products-response.json").getFile().toPath());
+
         mvc.perform(get("/shop/product"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(expectedResponse))
                 .andDo(print());
     }
 
@@ -44,11 +47,13 @@ public class ShopControllerTest extends BankonboardingApplicationTests {
 
     @Test
     public void calcProductsTest() throws Exception {
-        byte[] request = Files.readAllBytes(new ClassPathResource("controller/calc-products-request.json").getFile().toPath());
-        mvc.perform(post("/shop/calc")
-                        .content(request).contentType(MediaType.APPLICATION_JSON))
+        String request = Files.readString(new ClassPathResource("controller/calc-products-request.json").getFile().toPath());
+        String expectedResponse = Files.readString(new ClassPathResource("controller/calc-products-response.json").getFile().toPath());
+
+        mvc.perform(post("/shop/calc").content(request).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(expectedResponse))
                 .andDo(print());
     }
 }
