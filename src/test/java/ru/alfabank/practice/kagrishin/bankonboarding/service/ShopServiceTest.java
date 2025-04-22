@@ -3,14 +3,14 @@ package ru.alfabank.practice.kagrishin.bankonboarding.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.alfabank.practice.kagrishin.bankonboarding.BankonboardingApplicationTests;
+import ru.alfabank.practice.kagrishin.bankonboarding.exception.ProductNotFoundException;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Product;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ShopServiceTest extends BankonboardingApplicationTests {
 
@@ -52,5 +52,12 @@ public class ShopServiceTest extends BankonboardingApplicationTests {
 
         //sum must be 1580.15
         assertEquals(sum, BigDecimal.valueOf(1580.15));
+    }
+
+    @Test
+    public void checkCalcThrowProductNotFoundException() {
+        assertThrows(ProductNotFoundException.class, () -> shopService.calculateProducts(
+                        List.of(Product.builder().id("adsasd").quantity(2).build())
+                ));
     }
 }
