@@ -16,7 +16,14 @@ public class ScheduledTasksTest extends BankonboardingApplicationTests {
     private ProductService productService;
 
     @Test
-    public void inventoryTaskTest() {
+    public void expectTwoUnavailableProductsAfterInventory() {
+        scheduledTasks.inventory();
+        assertEquals(productService.getUnavailableProducts().size(), 2);
+    }
+
+    @Test
+    public void expectTwoUnavailableProductsAfterTwoInventory() {
+        scheduledTasks.inventory();
         scheduledTasks.inventory();
         assertEquals(productService.getUnavailableProducts().size(), 2);
     }

@@ -2,8 +2,8 @@ package ru.alfabank.practice.kagrishin.bankonboarding.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.alfabank.practice.kagrishin.bankonboarding.entity.ProductEntity;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Product;
-import ru.alfabank.practice.kagrishin.bankonboarding.model.entity.ProductEntity;
 import ru.alfabank.practice.kagrishin.bankonboarding.repository.ProductRepository;
 
 import java.util.List;
@@ -16,25 +16,25 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public List<Product> getAvailableProducts() {
-        return productRepository.findByIsAvailableTrue().stream().map(productEntity ->
-                Product.builder()
+        return productRepository.findByIsAvailableTrue().stream()
+                .map(productEntity -> Product.builder()
                         .id(productEntity.getId())
                         .name(productEntity.getName())
                         .price(productEntity.getPrice())
                         .isAvailable(productEntity.getIsAvailable())
                         .build()
-        ).toList();
+                ).toList();
     }
 
     public List<Product> getUnavailableProducts() {
-        return productRepository.findByIsAvailableFalse().stream().map(productEntity ->
-                Product.builder()
+        return productRepository.findByIsAvailableFalse().stream()
+                .map(productEntity -> Product.builder()
                         .id(productEntity.getId())
                         .name(productEntity.getName())
                         .price(productEntity.getPrice())
                         .isAvailable(productEntity.getIsAvailable())
                         .build()
-        ).toList();
+                ).toList();
     }
 
     public Optional<Product> getProduct(String id) {

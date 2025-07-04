@@ -5,9 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.alfabank.practice.kagrishin.bankonboarding.mapper.ProductProductDtoMapper;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Product;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.ProductSummary;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.CalculateProductsRequest;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.CalculateProductsResponse;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.ProductDto;
-import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.ProductSummaryDto;
-import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.ProductSummaryResponse;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.WelcomeResponse;
 import ru.alfabank.practice.kagrishin.bankonboarding.service.ShopService;
 
@@ -33,10 +34,11 @@ public class ShopController {
     }
 
     @PostMapping("/calc")
-    public ProductSummaryResponse calculateProducts(
-            @Valid @RequestBody List<ProductSummaryDto> productDtoList
+    public CalculateProductsResponse calculateProducts(
+            @Valid @RequestBody CalculateProductsRequest calculateProductsRequest
     ) {
-        List<Product> products = productProductDtoMapper.productSummaryRequestDtoToProductList(productDtoList);
-        return productProductDtoMapper.productSummaryToProductSummaryResponseDto(shopService.calculateProducts(products));
+        List<Product> products = productProductDtoMapper.productSummaryRequestDtoToProductList(calculateProductsRequest.products());
+        ProductSummary productSummary = shopService.calculateProducts(products, calculateProductsRequest.deliveryAddress());
+        return productProductDtoMapper.productSummaryToCalculateProductsResponse(productSummary);
     }
 }

@@ -1,4 +1,4 @@
-package ru.alfabank.practice.kagrishin.bankonboarding.model.entity;
+package ru.alfabank.practice.kagrishin.bankonboarding.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded=true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @Document(collection = "discounts")
 public class DiscountEntity {

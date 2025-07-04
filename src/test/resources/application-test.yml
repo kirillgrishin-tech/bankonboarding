@@ -1,6 +1,13 @@
 spring:
   application.name: bankonboarding
+  cloud:
+    openfeign:
+      client:
+        config:
+          dadataClient:
+            url: http://localhost:${wiremock.server.port}
 bankonboarding:
+  settings.max-discount: 10
   scheduler:
     inventory:
       enabled: true

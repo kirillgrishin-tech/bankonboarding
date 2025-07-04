@@ -1,7 +1,14 @@
 server.port: 8084
+dadata.token:
 spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          dadataClient:
+            url: https://suggestions.dadata.ru/suggestions/api/4_1
   application.name: bankonboarding
-  data.mongodb.uri: 
+  data.mongodb.uri:
 bankonboarding:
   settings.max-discount: 50
   scheduler:

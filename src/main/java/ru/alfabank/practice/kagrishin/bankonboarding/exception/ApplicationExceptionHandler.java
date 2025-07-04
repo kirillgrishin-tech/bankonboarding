@@ -1,12 +1,12 @@
 package ru.alfabank.practice.kagrishin.bankonboarding.exception;
 
+import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.method.ParameterErrors;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.method.annotation.HandlerMethodValidationException;
+import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.ErrorResponse;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.dto.ProductSummaryDto;
 
 import java.util.HashMap;
@@ -24,24 +24,23 @@ public class ApplicationExceptionHandler {
         return new ResponseEntity<>(productSummaryDto, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(HandlerMethodValidationException.class)
-    protected ResponseEntity<Map<String, String>> handleValidationExceptions(HandlerMethodValidationException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getParameterValidationResults().forEach(error -> {
-            if (error instanceof ParameterErrors parameterErrors) {
-                parameterErrors.getFieldErrors().forEach( parameterError ->
-                        errors.put(parameterError.getField(), parameterError.getDefaultMessage())
-                );
-            }
-        });
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(FeignException.class)
+    protected ResponseEntity<String> handleException(FeignException ex) {
+        return ResponseEntity
+                .status(ex.status())
+                .body(ex.contentUTF8());
+    }
+
+    @ExceptionHandler(AddressNotFoundException.class)
+    protected ResponseEntity<ErrorResponse> handleException(AddressNotFoundException ex) {
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getFieldErrors().forEach(error ->
-                        errors.put(error.getField(), error.getDefaultMessage())
+                errors.put(error.getField(), error.getDefaultMessage())
         );
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }

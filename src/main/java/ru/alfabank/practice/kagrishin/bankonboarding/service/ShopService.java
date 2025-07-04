@@ -1,9 +1,13 @@
 package ru.alfabank.practice.kagrishin.bankonboarding.service;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import ru.alfabank.practice.kagrishin.bankonboarding.config.BusinessConfig;
+import ru.alfabank.practice.kagrishin.bankonboarding.exception.AddressNotFoundException;
 import ru.alfabank.practice.kagrishin.bankonboarding.exception.ProductNotFoundException;
+import ru.alfabank.practice.kagrishin.bankonboarding.logging.Log;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Discount;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Product;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.ProductSummary;
@@ -18,21 +22,26 @@ import java.util.Objects;
 public class ShopService {
 
     private final ProductService productService;
+    private final DadataService dadataService;
     private final DiscountService discountService;
     private final BusinessConfig businessConfig;
 
+    @Log
     public String getWelcomeMessage() {
         return "Добро пожаловать в наш чудесный магазин";
     }
 
+    @Log
     public List<Product> getAllProducts() {
         return productService.getAvailableProducts();
     }
 
-    public ProductSummary calculateProducts(List<Product> products) {
-        if (Objects.isNull(products)) {
-            return new ProductSummary();
-        }
+    @Log
+    public ProductSummary calculateProducts(@NotNull List<Product> products, @NotNull String deliveryAddress) {
+        dadataService.getAddresses(deliveryAddress).stream()
+                .filter(address -> StringUtils.equals(address.getFiasLevel(), "9"))
+                .findFirst()
+                .orElseThrow(() -> new AddressNotFoundException("Address: " + deliveryAddress + " not found!"));
         List<Product> matchedProducts = findAndAggregateMatchedProductsFromStorage(products);
         BigDecimal sum = calculateSumOfAllProducts(matchedProducts);
         return new ProductSummary(sum, matchedProducts);
@@ -60,7 +69,7 @@ public class ShopService {
                     int discount = discountService.getDiscounts(product.getId())
                             .stream()
                             .map(Discount::getPercent)
-                            .reduce(0,Integer::sum);
+                            .reduce(0, Integer::sum);
                     if (businessConfig.getMaxDiscount() > 0 && discount > businessConfig.getMaxDiscount()) {
                         discount = businessConfig.getMaxDiscount();
                     }
