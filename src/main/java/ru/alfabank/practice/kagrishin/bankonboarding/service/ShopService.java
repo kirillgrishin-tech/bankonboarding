@@ -14,6 +14,7 @@ import ru.alfabank.practice.kagrishin.bankonboarding.model.ProductSummary;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -63,10 +64,11 @@ public class ShopService {
         ).toList();
     }
 
-    private BigDecimal calculateSumOfAllProducts(List<Product> products) {
+    private BigDecimal calculateSumOfAllProducts(@NotNull List<Product> products) {
         return products.stream()
                 .map(product -> {
                     int discount = discountService.getDiscounts(product.getId())
+                            .orElse(new ArrayList<>())
                             .stream()
                             .map(Discount::getPercent)
                             .reduce(0, Integer::sum);

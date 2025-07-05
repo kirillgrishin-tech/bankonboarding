@@ -1,10 +1,9 @@
 package ru.alfabank.practice.kagrishin.bankonboarding.logging;
 
 import lombok.extern.log4j.Log4j2;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
@@ -17,13 +16,16 @@ public class LoggingAspect {
     private void withLogAnnotation() {
     }
 
-    @Before("withLogAnnotation()")
-    public void logBefore(JoinPoint joinPoint) {
-        log.info("[{}, args = {};] start", joinPoint.getSignature(), joinPoint.getArgs());
-    }
-
-    @AfterReturning(value = "withLogAnnotation()", returning = "result")
-    public void logAfter(JoinPoint joinPoint, Object result) {
-        log.info("[{}, args = {};] with returning = {}; end", joinPoint.getSignature(), joinPoint.getArgs(), result);
+    @Around(value = "withLogAnnotation()")
+    public Object logAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        log.info("[{}, args = {};] start", proceedingJoinPoint.getSignature(), proceedingJoinPoint.getArgs());
+        try {
+            Object result = proceedingJoinPoint.proceed();
+            log.info("[{}, args = {};] with returning = {}; end", proceedingJoinPoint.getSignature(), proceedingJoinPoint.getArgs(), result);
+            return result;
+        } catch (Throwable ex) {
+            log.info("[{}, args = {};] threw exception {}", proceedingJoinPoint.getSignature(), proceedingJoinPoint.getArgs(), ex);
+            throw ex;
+        }
     }
 }
