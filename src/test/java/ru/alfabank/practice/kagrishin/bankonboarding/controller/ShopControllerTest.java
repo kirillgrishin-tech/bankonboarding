@@ -2,12 +2,16 @@ package ru.alfabank.practice.kagrishin.bankonboarding.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.ClientSessionException;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.json.JsonCompareMode;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.alfabank.practice.kagrishin.bankonboarding.BankonboardingApplicationTests;
+import ru.alfabank.practice.kagrishin.bankonboarding.repository.ProductRepository;
 import ru.alfabank.practice.kagrishin.bankonboarding.stub.DadataClientStub;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -18,6 +22,9 @@ public class ShopControllerTest extends BankonboardingApplicationTests {
 
     @Autowired
     private MockMvc mvc;
+
+    @MockitoSpyBean
+    private ProductRepository productRepository;
 
     @Test
     public void expectWelcomeMessageAndStatusOK() throws Exception {
@@ -35,6 +42,14 @@ public class ShopControllerTest extends BankonboardingApplicationTests {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(expectedResponse, JsonCompareMode.STRICT))
+                .andDo(print());
+    }
+
+    @Test
+    public void expectMongoDbNotAvailableException() throws Exception {
+        when(productRepository.findByIsAvailableTrue()).thenThrow(new ClientSessionException(""));
+        mvc.perform(get("/shop/product"))
+                .andExpect(status().isServiceUnavailable())
                 .andDo(print());
     }
 

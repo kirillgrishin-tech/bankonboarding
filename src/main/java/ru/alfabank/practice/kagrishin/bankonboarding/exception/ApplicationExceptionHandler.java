@@ -1,6 +1,7 @@
 package ru.alfabank.practice.kagrishin.bankonboarding.exception;
 
 import feign.FeignException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -34,6 +35,11 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(AddressNotFoundException.class)
     protected ResponseEntity<ErrorResponse> handleException(AddressNotFoundException ex) {
         return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DataAccessException.class)
+    protected ResponseEntity<ErrorResponse> handleDataAccessException(DataAccessException ex) {
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

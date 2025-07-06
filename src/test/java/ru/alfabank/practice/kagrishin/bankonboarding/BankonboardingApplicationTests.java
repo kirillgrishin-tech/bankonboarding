@@ -35,7 +35,7 @@ import static org.springframework.test.annotation.DirtiesContext.HierarchyMode.C
 public abstract class BankonboardingApplicationTests {
 
     @Container
-    static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:4.0.10");
+    protected static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:4.0.10");
 
     @Autowired
     private ProductRepository productRepository;

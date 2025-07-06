@@ -2,7 +2,6 @@ package ru.alfabank.practice.kagrishin.bankonboarding.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.alfabank.practice.kagrishin.bankonboarding.logging.Log;
 import ru.alfabank.practice.kagrishin.bankonboarding.model.Discount;
 import ru.alfabank.practice.kagrishin.bankonboarding.repository.DiscountRepository;
 
@@ -15,7 +14,6 @@ public class DiscountService {
 
     private final DiscountRepository discountRepository;
 
-    @Log
     public Optional<List<Discount>> getDiscounts(String productId) {
         List<Discount> discounts = discountRepository.findByApplicableProductIdsContainingAndIsEnableTrue(productId)
                 .stream()
