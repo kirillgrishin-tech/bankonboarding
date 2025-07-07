@@ -34,7 +34,7 @@ public class ShopServiceTest extends BankonboardingApplicationTests {
     @Test
     public void expectSumOfProductsWithDiscount() {
         //prepare for calculate: one coke-cola, three butters and two apples with discounts
-        DadataClientStub.defaultStub();
+        DadataClientStub.returnValidAddressWithNineFialLevel();
         List<Product> products = new ArrayList<>();
         shopService.getAllProducts().forEach(product -> {
             switch (product.getName()) {
@@ -59,7 +59,7 @@ public class ShopServiceTest extends BankonboardingApplicationTests {
 
     @Test
     public void expectProductNotFoundException() {
-        DadataClientStub.defaultStub();
+        DadataClientStub.returnValidAddressWithNineFialLevel();
 
         assertThrows(ProductNotFoundException.class, () -> shopService.calculateProducts(
                 List.of(Product.builder().id("adsasd").quantity(2).build()),
@@ -69,7 +69,7 @@ public class ShopServiceTest extends BankonboardingApplicationTests {
 
     @Test
     public void expectAddressNotFoundException() {
-        DadataClientStub.emptyResponse();
+        DadataClientStub.returnEmptyResponse();
 
         assertThrows(AddressNotFoundException.class, () -> shopService.calculateProducts(
                 List.of(Product.builder().id("adsasd").quantity(2).build()), ""));

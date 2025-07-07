@@ -55,7 +55,7 @@ public class ShopControllerTest extends BankonboardingApplicationTests {
 
     @Test
     public void expectCalcProductsErrorWithBadRequestStatus() throws Exception {
-        DadataClientStub.defaultStub();
+        DadataClientStub.returnValidAddressWithNineFialLevel();
         String expectedResponse = readStringFromFile("controller/calc-products-bad-request-response.json");
         String request = readStringFromFile("controller/calc-products-bad-request-request.json");
 
@@ -67,7 +67,7 @@ public class ShopControllerTest extends BankonboardingApplicationTests {
 
     @Test
     public void expectSumOfProductsWithStatusOK() throws Exception {
-        DadataClientStub.defaultStub();
+        DadataClientStub.returnValidAddressWithNineFialLevel();
         String request = readStringFromFile("controller/calc-products-request.json");
         String expectedResponse = readStringFromFile("controller/calc-products-response.json");
 
@@ -93,7 +93,7 @@ public class ShopControllerTest extends BankonboardingApplicationTests {
     @Test
     public void expectUnauthorisedErrorProxiesFromDadata() throws Exception {
         String request = readStringFromFile("controller/calc-products-request.json");
-        DadataClientStub.unauthorisedErrorResponse();
+        DadataClientStub.returnUnauthorisedErrorResponse();
 
         mvc.perform(post("/shop/calc").content(request).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized())
@@ -104,7 +104,7 @@ public class ShopControllerTest extends BankonboardingApplicationTests {
     public void expectAddressNotFoundBadRequestError() throws Exception {
         String request = readStringFromFile("controller/calc-products-request.json");
         String expectedResponse = readStringFromFile("controller/address-not-found-response.json");
-        DadataClientStub.addressesWithoutFiasLevelNineCode();
+        DadataClientStub.returnAddressesWithoutNineFiasLevel();
 
         mvc.perform(post("/shop/calc").content(request).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())

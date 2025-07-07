@@ -9,26 +9,26 @@ public class DadataClientStub {
 
     private static final String DADATA_PATH = "/rs/suggest/address";
 
-    public static void defaultStub() {
+    public static void returnValidAddressWithNineFialLevel() {
         stubFor(post(urlPathMatching(DADATA_PATH))
                 .willReturn(ok()
                         .withHeader(HttpHeader.CONTENT_TYPE.asString(), ContentType.APPLICATION_JSON.getMimeType())
                         .withBodyFile("one-address-response.json")));
     }
 
-    public static void emptyResponse() {
+    public static void returnEmptyResponse() {
         stubFor(post(urlPathMatching(DADATA_PATH))
                 .willReturn(ok()
                         .withHeader(HttpHeader.CONTENT_TYPE.asString(), ContentType.APPLICATION_JSON.getMimeType())));
     }
 
-    public static void unauthorisedErrorResponse() {
+    public static void returnUnauthorisedErrorResponse() {
         stubFor(post(urlPathMatching(DADATA_PATH))
                 .willReturn(unauthorized()
                         .withHeader(HttpHeader.CONTENT_TYPE.asString(), ContentType.APPLICATION_JSON.getMimeType())));
     }
 
-    public static void addressesWithoutFiasLevelNineCode() {
+    public static void returnAddressesWithoutNineFiasLevel() {
         stubFor(post(urlPathMatching(DADATA_PATH))
                 .willReturn(ok()
                         .withHeader(HttpHeader.CONTENT_TYPE.asString(), ContentType.APPLICATION_JSON.getMimeType())

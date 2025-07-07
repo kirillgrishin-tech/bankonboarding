@@ -20,7 +20,7 @@ public class DadataServiceTest extends BankonboardingApplicationTests {
     @Test
     public void expectOneAddress() throws Exception {
         String address = "Москва Маршала Жукова 1";
-        DadataClientStub.defaultStub();
+        DadataClientStub.returnValidAddressWithNineFialLevel();
 
         List<Address> addresses = dadataService.getAddresses(address);
 
