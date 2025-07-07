@@ -11,6 +11,7 @@ import ru.alfabank.practice.kagrishin.bankonboarding.BankonboardingApplicationTe
 import ru.alfabank.practice.kagrishin.bankonboarding.repository.ProductRepository;
 import ru.alfabank.practice.kagrishin.bankonboarding.stub.DadataClientStub;
 
+import static java.lang.String.format;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -47,9 +48,12 @@ public class ShopControllerTest extends BankonboardingApplicationTests {
 
     @Test
     public void expectMongoDbNotAvailableException() throws Exception {
-        when(productRepository.findByIsAvailableTrue()).thenThrow(new ClientSessionException(""));
+        String exceptionMessage = "session exception";
+        when(productRepository.findByIsAvailableTrue()).thenThrow(new ClientSessionException(exceptionMessage));
+
         mvc.perform(get("/shop/product"))
                 .andExpect(status().isServiceUnavailable())
+                .andExpect(content().json(format("{\"message\":\"%s\"}", exceptionMessage), JsonCompareMode.STRICT))
                 .andDo(print());
     }
 
