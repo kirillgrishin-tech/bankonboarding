@@ -18,7 +18,7 @@ public class DadataServiceTest extends BankonboardingApplicationTests {
     private DadataService dadataService;
 
     @Test
-    public void expectOneAddress() throws Exception {
+    public void expectOneAddress() {
         String address = "Москва Маршала Жукова 1";
         DadataClientStub.returnValidAddressWithNineFialLevel();
 
